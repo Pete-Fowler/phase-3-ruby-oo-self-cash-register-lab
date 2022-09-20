@@ -1,19 +1,23 @@
+require 'pry'
+
 
 class CashRegister 
-  attr_reader :discount
+  attr_reader :discount, :items
   attr_accessor :total
 
   def initialize(discount = 0)
     @discount = discount
     @total = 0
-    @cart = []
+    @items = []
+    @last_transaction = []
   end
 
   def add_item(title, price, qty = 1)
     @total += price * qty
     qty.times do 
-      @cart.push(title)
+      @items.push(title)
     end
+    @last_transaction = price * qty
   end
 
   def apply_discount 
@@ -25,12 +29,8 @@ class CashRegister
     end
   end
 
-  def items
-    @cart
-  end
-
   def void_last_transaction 
-    
+    @total -= @last_transaction
   end
 
 end
